@@ -165,17 +165,17 @@
             <h2 id="dynamic-greeting" class="greeting-title">Servus,</h2>
             
             <p>
-                ich hoffe, Sie können die kommenden Festtage nutzen, um die wohlverdiente Ruhe zu genießen und im Kreise Ihrer Liebsten Kraft zu tanken.
+                ich hoffe, du kannst die kommenden Festtage nutzen, um die wohlverdiente Ruhe zu genießen und im Kreise deiner Liebsten Kraft zu tanken.
             </p>
             
             <p>
-                Es war ein ereignisreiches Jahr, und ich freue mich sehr darauf, unseren Austausch 2026 fortzusetzen – sei es digital oder vielleicht sogar persönlich.
+                Es war ein ereignisreiches Jahr, und ich freue mich darauf, unseren Austausch 2026 fortzusetzen – sei es digital oder persönlich.
             </p>
         </div>
 
         <div class="calendly-section">
             <p class="calendly-intro">
-                Lassen Sie uns in <strong>KW 3 oder 4</strong> einen Blick auf Ihre Pipeline und die Strategie für 2026 werfen.
+                Lass uns uns in <strong>KW 3 oder 4</strong> einen Blick auf die Pipeline und die Strategie für 2026 werfen.
             </p>
             
             <div class="calendly-inline-widget" 
@@ -191,28 +191,32 @@
 
     </div>
 
-    <script>
-        // Funktion zum Auslesen der URL Parameter
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
+<script>
+    // Führt den Code erst aus, nachdem das gesamte HTML-Dokument geladen ist.
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Holt den gesamten Query-String der URL (z.B. "?Claas%20Ole")
+        const queryString = window.location.search;
 
-        // Namen auslesen
-        var recipientName = getParameterByName('name');
-        var greetingElement = document.getElementById('dynamic-greeting');
+        // Prüft, ob überhaupt ein Query-String vorhanden ist (d.h. ob ein Name in der URL steht)
+        if (queryString) {
+            // 2. Entfernt das führende '?' und holt den kodierten Namen (z.B. "Claas%20Ole")
+            const encodedName = queryString.substring(1);
+            
+            // 3. Dekodiert den Namen, um Sonderzeichen und Leerzeichen korrekt darzustellen (z.B. "J%C3%BCrgen" -> "Jürgen")
+            const decodedName = decodeURIComponent(encodedName);
 
-        // Logik: Wenn Name vorhanden, dann "Servus Name,", sonst nur "Servus,"
-        if (recipientName) {
-            greetingElement.textContent = "Servus " + recipientName + ",";
-        } else {
-            greetingElement.textContent = "Servus,";
-        }
-    </script>
+            // 4. Findet das Gruß-Element
+            const greetingElement = document.getElementById('dynamic-greeting');
 
+            // 5. Aktualisiert den Inhalt des Elements
+            if (greetingElement && decodedName) {
+                // Setzt den neuen Text, z.B. "Servus Claas Ole!"
+                greetingElement.textContent = `Servus ${decodedName}!`;
+            }
+        } 
+        // Wenn kein Query-String vorhanden ist, bleibt der Text in der Überschrift ("Servus,") unverändert.
+    });
+</script>
+    
 </body>
 </html>
